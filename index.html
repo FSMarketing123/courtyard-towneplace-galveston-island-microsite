@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Courtyard and TownePlace Suites Galveston Island — Offered by Hodges Ward Elliott</title>
+<meta name="description" content="Hodges Ward Elliott presents the opportunity to acquire the 85-key Courtyard and 88-key TownePlace Suites Galveston Island.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<style>
+:root{
+  --navy:#314356; --navy-rgb:49,67,86;
+  --teal:#64899c; --teal-dk:#4f7183; --teal-lt:#8eabb9; --teal-rgb:100,137,156;
+  --warm:#413c39; --light:#f6f5f5; --gray:#dedede; --foot:#474546;
+  --text:#454545; --muted:#6c7378; --white:#fff;
+  --font:"Poppins",-apple-system,system-ui,"Segoe UI",sans-serif;
+  --wrap:1180px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-weight:300;color:var(--text);background:var(--light);line-height:1.75;font-size:16px;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+strong{font-weight:600}
+.wrap{width:min(var(--wrap),100% - 48px);margin-inline:auto}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Scroll reveal (Chifley behavior) ---------- */
+.reveal{opacity:0;transform:scale(.94) translateY(18px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+
+/* ---------- Side CA tab ---------- */
+.side-cta{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:150;background:var(--teal-dk);color:#fff;writing-mode:vertical-rl;text-orientation:sideways;padding:22px 11px;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border-radius:0 3px 3px 0;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:background .2s,transform 3s cubic-bezier(.22,1,.36,1)}
+.side-cta:hover{background:var(--navy)}
+.side-cta.away{transform:translate(-110%,-50%);transition:background .2s,transform .35s cubic-bezier(.55,0,.75,.2)}
+@media (max-width:900px){.side-cta{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;height:100vh;min-height:620px;overflow:hidden;background:#0d1620;color:#fff;display:flex;align-items:center;justify-content:center}
+.hero-bg{position:absolute;inset:-6% 0 -18%;background:url(assets/img/hero.jpg) center 55%/cover no-repeat;will-change:transform}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(6,12,20,.68) 0%,rgba(6,12,20,.5) 40%,rgba(6,12,20,.6) 72%,rgba(6,12,20,.85) 100%)}
+/* Infinite property gallery */
+.marquee{margin-top:clamp(60px,7vw,100px);display:flex;flex-direction:column;gap:10px;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.mq-row{overflow:hidden}
+.mq-track{display:flex;gap:10px;width:max-content;animation:mqLeft var(--mq-dur,70s) linear infinite}
+.mq-row[data-dir="right"] .mq-track{animation-name:mqRight}
+.marquee:hover .mq-track,.marquee:focus-within .mq-track{animation-play-state:paused}
+@keyframes mqLeft{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 5px))}}
+@keyframes mqRight{from{transform:translateX(calc(-50% - 5px))}to{transform:translateX(0)}}
+.mq-item{all:unset;box-sizing:border-box;position:relative;flex:0 0 auto;width:clamp(260px,30vw,440px);height:clamp(190px,21vw,300px);overflow:hidden;border-radius:2px;cursor:zoom-in}
+.mq-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease),filter .4s;filter:saturate(.95)}
+.mq-item:hover img{transform:scale(1.07);filter:saturate(1.05)}
+.mq-item:focus-visible{outline:2px solid var(--navy);outline-offset:-3px}
+.mq-tag{position:absolute;left:0;right:0;bottom:0;padding:26px 16px 12px;background:linear-gradient(to top,rgba(0,0,0,.66),transparent);color:#fff;font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
+.mq-item:hover .mq-tag,.mq-item:focus-visible .mq-tag{opacity:1;transform:none}
+@media (hover:none){.mq-tag{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.mq-track{animation:none}.mq-row{overflow-x:auto}}
+.hero-mast{position:absolute;top:34px;left:50%;transform:translateX(-50%);z-index:3;display:flex;align-items:center;gap:22px}
+.hero-mast .rule{width:56px;height:1px;background:rgba(255,255,255,.55)}
+.hero-mast img{width:118px;height:auto}
+.hero-logo{position:relative;z-index:3;padding:clamp(30px,3.2vw,48px) clamp(36px,3.8vw,60px);border-radius:22px;overflow:hidden;isolation:isolate;
+  background:linear-gradient(155deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.06) 38%,rgba(255,255,255,.02) 62%,rgba(255,255,255,.08) 100%),linear-gradient(rgba(var(--navy-rgb),.34),rgba(var(--navy-rgb),.34));
+  -webkit-backdrop-filter:blur(34px) saturate(180%) brightness(.82) contrast(1.04);backdrop-filter:blur(34px) saturate(180%) brightness(.82) contrast(1.04);
+  box-shadow:0 40px 100px rgba(0,0,0,.38),0 12px 30px rgba(0,0,0,.22),inset 0 1.5px 0 rgba(255,255,255,.75),inset 0 -1px 0 rgba(255,255,255,.18),inset 1px 0 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.10),inset 0 18px 40px -18px rgba(255,255,255,.45),inset 0 -24px 50px -24px rgba(var(--teal-rgb),.40);
+  animation:glassIn 1.4s var(--ease) .15s both}
+.hero-logo::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;z-index:1;pointer-events:none;background:linear-gradient(140deg,rgba(255,255,255,.95),rgba(255,255,255,.25) 30%,rgba(255,255,255,.06) 55%,rgba(142,171,185,.6) 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.hero-logo::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(110% 60% at 15% -10%,rgba(255,255,255,.45),transparent 55%),radial-gradient(70% 50% at 100% 110%,rgba(var(--teal-rgb),.28),transparent 70%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E")}
+.hero-logo img{position:relative;z-index:2;width:clamp(280px,34vw,520px);height:auto;filter:drop-shadow(0 2px 12px rgba(0,0,0,.4)) drop-shadow(0 0 1px rgba(0,0,0,.25))}
+@keyframes glassIn{from{opacity:0;transform:scale(.92) translateY(18px)}to{opacity:1;transform:none}}
+.hero-foot{position:absolute;left:0;right:0;bottom:30px;z-index:3;display:flex;justify-content:center;gap:22px;align-items:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.82)}
+.hero-foot .sep{width:1px;height:14px;background:rgba(255,255,255,.4)}
+.scroll-cue{position:absolute;right:clamp(18px,4vw,60px);bottom:30px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,255,255,.75);text-decoration:none;font-size:10px;letter-spacing:.26em;text-transform:uppercase;writing-mode:vertical-rl}
+.scroll-cue i{display:block;width:1px;height:46px;background:rgba(255,255,255,.7);transform-origin:top;animation:scrollPulse 2.2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:1;transform:scaleY(1)}50%{opacity:.4;transform:scaleY(.6)}}
+@media (max-width:760px){.hero-foot{flex-direction:column;gap:4px;bottom:40px;text-align:center;padding:0 20px;font-size:10px;letter-spacing:.16em}.hero-foot .sep{display:none}.scroll-cue{display:none}.hero-logo img{width:240px}.reset-btn{bottom:30px}}
+
+/* ---------- Type ---------- */
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--teal);margin:0 0 10px}
+.h2{font-family:"Abril Fatface",Georgia,serif;font-size:clamp(28px,3vw,40px);font-weight:400;letter-spacing:.01em;line-height:1.2;color:var(--navy);margin:0 0 22px}
+.lead{margin:0 0 18px;text-align:justify}
+.on-dark .h2,.on-dark .lead{color:#fff}
+.on-dark .eyebrow{color:var(--teal-lt)}
+
+/* ---------- Buttons ---------- */
+.cta-buttons{display:flex;gap:34px;justify-content:center;flex-wrap:wrap;margin-top:44px}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:280px;padding:17px 56px 17px 30px;background:var(--teal);color:#fff;text-decoration:none;font-size:13.5px;font-weight:500;letter-spacing:.02em;border-radius:2px;box-shadow:0 10px 26px rgba(var(--navy-rgb),.22);transition:transform .2s,background .2s,box-shadow .2s}
+.btn::after{content:"";position:absolute;right:22px;top:50%;width:20px;height:12px;transform:translateY(-50%);background:currentColor;transition:transform .25s;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12'%3E%3Cpath d='M0 6h18M13 1l5 5-5 5' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12'%3E%3Cpath d='M0 6h18M13 1l5 5-5 5' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E") center/contain no-repeat}
+.btn:hover{transform:translateY(-1px);background:var(--navy);box-shadow:0 16px 34px rgba(var(--navy-rgb),.3)}
+.btn:hover::after{transform:translate(4px,-50%)}
+.on-dark .btn{background:#fff;color:var(--navy)}
+.on-dark .btn:hover{background:var(--navy);color:#fff}
+
+/* ---------- Sections ---------- */
+section{position:relative}
+.sec{padding:clamp(70px,8vw,120px) 0}
+.sec-light{background:var(--light)}
+.sec-gray{background:var(--gray)}
+.sec-teal{background:var(--teal)}
+.sec-warm{background:var(--warm)}
+
+/* Overview */
+.overview .wrap{max-width:980px}
+.band{position:relative;height:clamp(320px,52vw,640px);margin-top:clamp(60px,7vw,100px);overflow:hidden}
+
+/* Pan-on-hover panels (Chifley behavior) */
+.pan{background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+
+/* ---------- Property snapshot ---------- */
+.props{padding-top:0}
+.props-head{text-align:center;margin-bottom:46px}
+.prop-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.prop{background:#8fa3ad;background:linear-gradient(180deg,#8ea4b0 0%,#7f98a5 100%);color:#fff;border-radius:2px;overflow:hidden;box-shadow:0 24px 60px rgba(var(--navy-rgb),.18);display:flex;flex-direction:column}
+.prop-photo{height:300px;overflow:hidden;position:relative}
+.prop-photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.prop-photo:hover img{transform:scale(1.04)}
+.prop-name{text-align:center;padding:34px 30px 26px}
+.prop-name .brand{font-size:clamp(28px,2.8vw,38px);font-weight:500;letter-spacing:.12em;text-transform:uppercase;line-height:1.1}
+.prop-name .brand small{display:block;font-size:.62em;letter-spacing:.14em}
+.prop-name .loc{display:inline-block;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.6);font-size:13px;letter-spacing:.34em;text-transform:uppercase}
+.prop table{width:calc(100% - 60px);margin:0 30px 30px;border-collapse:collapse;font-size:13.5px}
+.prop th,.prop td{padding:12px 0;border-top:1px solid rgba(255,255,255,.38);text-align:left;vertical-align:top}
+.prop th{width:44%;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding-right:16px;padding-top:14px}
+.prop td{font-weight:400}
+.prop-thumbs{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:auto}
+.prop-thumbs button{all:unset;cursor:zoom-in;height:190px;overflow:hidden;position:relative;display:block}
+.prop-thumbs img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.prop-thumbs button:hover img{transform:scale(1.06)}
+.prop-thumbs button:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.photo-label{position:absolute;left:0;right:0;bottom:0;padding:14px 16px 12px;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;pointer-events:none}
+
+/* ---------- Divider ---------- */
+.divider{height:clamp(300px,40vw,520px);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.divider .pan{position:absolute;inset:0}
+.divider::before{content:"";position:absolute;inset:0;z-index:1;background:rgba(6,12,20,.18);pointer-events:none}
+.glass-label{position:relative;z-index:2;padding:18px 44px;border-radius:14px;color:#fff;font-size:clamp(20px,2.3vw,30px);font-weight:500;letter-spacing:.02em;background:linear-gradient(155deg,rgba(255,255,255,.26),rgba(255,255,255,.08));-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);box-shadow:0 20px 50px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.7),inset 0 0 0 1px rgba(255,255,255,.18);pointer-events:none}
+
+/* ---------- Two-column ---------- */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,70px);align-items:center}
+.panel{background:#fff;padding:clamp(28px,3.4vw,46px);border-radius:2px;box-shadow:0 22px 60px rgba(0,0,0,.08)}
+.panel .lead:last-child{margin-bottom:0}
+.panel-teal{background:rgba(255,255,255,.88)}
+.photo-frame{overflow:hidden;border-radius:2px;box-shadow:0 22px 60px rgba(0,0,0,.18);position:relative}
+.photo-frame img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.photo-frame:hover img{transform:scale(1.03)}
+
+/* ---------- Location cards (pop-out) ---------- */
+.loc-intro{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,4vw,60px);align-items:stretch}
+.loc-intro .photo-frame{min-height:340px}
+.location-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:clamp(50px,6vw,80px)}
+.loc-card{all:unset;box-sizing:border-box;position:relative;overflow:hidden;cursor:pointer;height:230px;border-radius:2px;transition:transform .3s,box-shadow .3s;display:block}
+.loc-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s,filter .3s;filter:brightness(.86)}
+.loc-card:hover img,.loc-card.active img{transform:scale(1.05);filter:brightness(1)}
+.loc-card.active{transform:scale(1.04);z-index:2;box-shadow:0 22px 55px rgba(0,0,0,.4)}
+.loc-card:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+.loc-card-body{position:absolute;left:0;right:0;bottom:0;padding:22px 20px 16px;background:linear-gradient(to top,rgba(10,18,28,.85),transparent);color:#fff}
+.loc-card-title{font-size:16px;font-weight:500;letter-spacing:.04em;line-height:1.3}
+.loc-card-desc{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#cfe0e8;margin-top:4px}
+.loc-popout-backdrop{position:fixed;inset:0;background:rgba(4,12,20,0);pointer-events:none;transition:background .4s;z-index:490}
+.loc-popout-backdrop.show{background:rgba(4,12,20,.7);pointer-events:auto}
+.loc-popout-stage{position:fixed;z-index:491;border-radius:4px;overflow:hidden;cursor:zoom-out;box-shadow:0 30px 100px rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:top .5s var(--ease),left .5s var(--ease),width .5s var(--ease),height .5s var(--ease),opacity .25s}
+.loc-popout-stage.show{opacity:1;pointer-events:auto}
+.loc-popout-stage img{width:100%;height:100%;object-fit:cover;display:block}
+.loc-popout-stage .loc-card-body{padding:40px 28px 24px}
+.loc-popout-stage .loc-card-title{font-size:24px}
+
+/* ---------- Logo tiles ---------- */
+.logo-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:14px;margin-top:34px}
+.logo-tile{all:unset;box-sizing:border-box;background:#fff;border-radius:4px;padding:16px;height:100px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,box-shadow .3s;position:relative}
+.logo-tile img{max-width:100%;max-height:62px;object-fit:contain}
+.logo-tile:hover{transform:scale(1.06);box-shadow:0 18px 44px rgba(0,0,0,.18);z-index:2}
+.logo-tile:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+.logo-hint{text-align:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:14px}
+
+/* ---------- Demand map ---------- */
+.map-shell{display:grid;grid-template-columns:1.55fr 1fr;margin-top:clamp(40px,5vw,60px);background:#fff;border-radius:2px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.14);height:560px}
+#demand-map{position:relative;height:100%;background:#eef0f1}
+.gen-wrap{overflow:auto;border-left:1px solid #e6e6e6}
+table.gen-table{width:100%;border-collapse:collapse;font-size:13px}
+.gen-table thead th{position:sticky;top:0;background:var(--navy);color:#fff;text-align:left;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:13px 14px;z-index:1}
+.gen-table thead th:last-child,.gen-table td:last-child{text-align:right;white-space:nowrap}
+.gen-table td{padding:10px 14px;border-bottom:1px solid #eee;color:var(--text);line-height:1.4}
+.gen-table tbody tr{cursor:pointer;transition:background .15s}
+.gen-table tbody tr:hover{background:#f1f5f7}
+.gen-table tbody tr.active{background:rgba(var(--teal-rgb),.18)}
+.pin-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--teal);color:#fff;font-size:10.5px;font-weight:600}
+.gen-table tr.active .pin-badge{background:var(--navy)}
+.num-pin{width:26px;height:26px;border-radius:50%;background:var(--teal);color:#fff;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font:600 11px var(--font);box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.hotel-pin{width:46px;height:46px;border-radius:50%;background:var(--navy);border:3px solid #fff;box-shadow:0 6px 18px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;color:#fff;font:600 10px/1 var(--font);letter-spacing:.06em;position:relative}
+.hotel-pin::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:2px solid rgba(var(--navy-rgb),.5);animation:ping 2.4s ease-out infinite}
+@keyframes ping{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.reset-btn{position:absolute;bottom:16px;left:16px;z-index:800;background:var(--navy);color:#fff;border:0;padding:9px 16px;font:600 10.5px var(--font);letter-spacing:.16em;text-transform:uppercase;border-radius:2px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.reset-btn:hover{background:var(--teal-dk)}
+.leaflet-popup-content{font:500 12.5px/1.4 var(--font);color:var(--navy)}
+.leaflet-container{font-family:var(--font)}
+
+/* ---------- Stat tiles ---------- */
+.stats{display:grid;gap:16px;margin-top:clamp(40px,5vw,56px)}
+.stats.four{grid-template-columns:repeat(4,1fr)}
+.stats.five{grid-template-columns:repeat(5,1fr)}
+.hstat{background:#fff;border-radius:2px;padding:clamp(22px,2vw,30px) clamp(14px,1.3vw,20px);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;transition:transform .32s var(--ease),box-shadow .32s}
+.hstat:hover{transform:scale(1.08);z-index:2;box-shadow:0 22px 50px rgba(0,0,0,.3)}
+.hstat .ico{width:38px;height:38px;color:var(--teal);margin-bottom:14px}
+.hstat .v{font-family:"Abril Fatface",Georgia,serif;font-size:clamp(22px,2.1vw,30px);font-weight:400;letter-spacing:.01em;color:var(--navy);line-height:1.15}
+.hstat .l{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:10px;line-height:1.5}
+.sec-warm .hstat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16)}
+.sec-warm .hstat .v{color:#fff}
+.sec-warm .hstat .l{color:rgba(255,255,255,.72)}
+.sec-warm .hstat .ico{color:var(--teal-lt)}
+
+/* ---------- Mosaic ---------- */
+.mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(220px,auto);gap:6px;margin-top:clamp(40px,5vw,56px)}
+.mosaic .m{position:relative;overflow:hidden;border-radius:2px;cursor:zoom-in}
+.mosaic .m.big{grid-column:span 2;grid-row:span 2}
+.mosaic .m.wide{grid-column:1/-1;aspect-ratio:1400/930}
+.port-panel{height:100%;min-height:520px;border-radius:2px;display:flex;align-items:center;justify-content:center;padding:60px;background:radial-gradient(120% 90% at 20% 0%,rgba(var(--teal-rgb),.55),transparent 60%),linear-gradient(160deg,#3b5368,var(--navy));box-shadow:0 22px 60px rgba(0,0,0,.18);transition:transform .4s var(--ease)}
+.port-panel img{width:min(320px,80%);filter:drop-shadow(0 6px 20px rgba(0,0,0,.3));transition:transform .6s var(--ease)}
+.port-panel:hover img{transform:scale(1.06)}
+
+/* ---------- Figures (Port) ---------- */
+.figures{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:clamp(40px,5vw,56px)}
+.figure{background:#fff;border-left:3px solid var(--teal);padding:24px 20px 22px;text-align:center;display:flex;flex-direction:column;justify-content:center;transition:transform .25s,box-shadow .25s;box-shadow:0 10px 30px rgba(0,0,0,.05)}
+.figure:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.14)}
+.figure .v{font-family:"Abril Fatface",Georgia,serif;font-size:clamp(22px,2vw,28px);font-weight:400;letter-spacing:.01em;color:var(--navy);line-height:1.15}
+.figure .l{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:10px;line-height:1.5}
+.cruise-head{text-align:center;margin:clamp(50px,6vw,70px) 0 0;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--teal)}
+.cruise-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:20px}
+.cruise-grid .logo-tile{cursor:default;height:96px}
+
+.photo-stack{display:grid;grid-template-rows:1fr 1fr;gap:16px;height:100%;min-height:640px}
+.photo-stack .photo-frame{min-height:0}
+.port-copy{max-width:none}
+.port-media{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:clamp(36px,4vw,52px)}
+.port-media .port-panel,.port-media .port-photo{min-height:360px;height:100%}
+.port-photo{background-size:cover;background-position:center}
+.placeholder{display:flex;align-items:center;justify-content:center;text-align:center;background:repeating-linear-gradient(45deg,#e9edef,#e9edef 14px,#dfe5e8 14px,#dfe5e8 28px);border:2px dashed var(--teal);color:var(--navy);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;box-shadow:none}
+.placeholder small{font-weight:400;letter-spacing:.1em;color:var(--muted)}
+
+/* ---------- Clean investment ---------- */
+.clean .two-col{align-items:stretch}
+.clean .photo-frame{min-height:380px}
+
+/* ---------- CTA close / Footer ---------- */
+.cta-close{padding:70px 0 80px;text-align:center}
+.cta-close .cta-buttons{margin-top:0}
+footer{background:var(--foot);color:#fff;padding:clamp(56px,6vw,80px) 0}
+.foot-grid{display:grid;grid-template-columns:260px 1fr;gap:50px;align-items:center}
+.foot-logo{width:150px}
+.foot-head{font-size:11px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.8);padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.3);margin:0 0 22px}
+.foot-reps{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px;margin-bottom:38px}
+.foot-reps:last-child{margin-bottom:0}
+.rep{margin:0;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.88)}
+.rep strong{display:block;color:#fff;font-weight:600}
+.rep a{text-decoration:none;color:rgba(255,255,255,.88);transition:color .2s}
+.rep a:hover{color:var(--teal-lt)}
+.legal{margin-top:46px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);font-size:11px;color:rgba(255,255,255,.5);text-align:center}
+
+/* ---------- Lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:600;background:rgba(4,10,16,.92);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.lb.show{opacity:1;pointer-events:auto}
+.lb img{max-width:92vw;max-height:84vh;box-shadow:0 30px 90px rgba(0,0,0,.6);transform:scale(.96);transition:transform .4s var(--ease)}
+.lb.show img{transform:none}
+.lb-cap{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:rgba(255,255,255,.8);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.lb-close{position:absolute;top:18px;right:22px;background:none;border:0;color:#fff;font-size:34px;line-height:1;cursor:pointer}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1080px){
+  .logo-grid{grid-template-columns:repeat(4,1fr)}
+  .stats.five,.figures{grid-template-columns:repeat(3,1fr)}
+  .cruise-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:860px){
+  .prop-grid,.two-col,.loc-intro,.port-media{grid-template-columns:1fr}
+  .photo-stack{min-height:0;grid-template-rows:280px 280px}
+  .location-cards{grid-template-columns:1fr 1fr}
+  .stats.four{grid-template-columns:1fr 1fr}
+  .map-shell{grid-template-columns:1fr;height:auto}
+  #demand-map{height:420px}
+  .gen-wrap{max-height:360px;border-left:0;border-top:1px solid #e6e6e6}
+  .mosaic{grid-template-columns:1fr 1fr;grid-auto-rows:minmax(180px,auto)}
+  .foot-grid{grid-template-columns:1fr;gap:34px}
+}
+@media (max-width:560px){
+  .wrap{width:calc(100% - 32px)}
+  .lead{text-align:left}
+  .location-cards,.stats.five,.figures{grid-template-columns:1fr}
+  .logo-grid,.cruise-grid{grid-template-columns:1fr 1fr}
+  .btn{min-width:0;width:100%}
+  .foot-reps{grid-template-columns:1fr}
+  .prop-photo{height:230px}
+  .prop-thumbs button{height:140px}
+  .mosaic .m.big{grid-column:span 2;grid-row:span 1}
+}
+</style>
+</head>
+<body>
+
+<a class="side-cta" href="#" target="_blank" rel="noopener">Sign CA</a>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="hero">
+  <div class="hero-bg" id="hero-img" aria-hidden="true"></div>
+  <div class="hero-mast"><span class="rule"></span><img src="assets/logos/hwe-white.svg" alt="Hodges Ward Elliott" width="118" height="45"><span class="rule"></span></div>
+  <div class="hero-logo"><img src="assets/logos/cy-tps-white.svg" alt="Courtyard and TownePlace Suites Galveston Island — Two Property Portfolio"></div>
+  <h1 class="sr-only">Courtyard and TownePlace Suites Galveston Island</h1>
+  <div class="hero-foot"><span>9550 &amp; 9540 Seawall Blvd, Galveston, TX 77554</span><span class="sep"></span><span>Offered by Hodges Ward Elliott</span></div>
+  <a class="scroll-cue" href="#overview" aria-label="Scroll to the investment overview"><span>Scroll</span><i></i></a>
+</header>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="overview sec sec-light" id="overview">
+  <div class="wrap">
+    <p class="eyebrow">Investment Overview</p>
+    <p class="lead">Hodges Ward Elliott ("HWE") is pleased to present the opportunity to acquire the <strong>85-key Courtyard</strong> and <strong>88-key TownePlace Suites Galveston Island</strong> (the "Hotels" or "Properties"), renovated in 2024 and ideally positioned along Galveston's premier waterfront. Located directly on the Gulf of America, the Properties benefit from convenient access to the island's renowned beaches, entertainment attractions, and corporate offerings, including proximity to <strong>Moody Gardens</strong>, the <strong>Port of Galveston</strong>, and the <strong>Galveston Island Historic Pleasure Pier</strong>. Galveston Island is a major tourism destination, attracting approximately <strong>9.1 million annual visitors</strong> and benefiting from the Port of Galveston, the <strong>fourth-busiest cruise port in the United States</strong>, which generated approximately 3.6 million passenger movements in 2025. Supported by a diverse mix of leisure, cruise, and extended-stay demand, the Courtyard and TownePlace Suites are well-positioned to capitalize on Galveston's continued growth as a leading Gulf Coast destination, presenting an attractive opportunity to acquire a recently renovated, waterfront hotel portfolio.</p>
+    <div class="cta-buttons">
+      <a class="btn" href="#" target="_blank" rel="noopener">Sign Confidentiality Agreement</a>
+      <a class="btn" href="#" target="_blank" rel="noopener">Download Confidentiality Agreement</a>
+    </div>
+  </div>
+  <div class="marquee" id="overview-photo" aria-label="Property photo gallery">
+    <div class="mq-row" data-dir="left">
+      <div class="mq-track">
+        <button class="mq-item" data-lb data-cap="Courtyard — Exterior at Dusk"><img src="assets/img/g-cy-1.jpg" alt="Courtyard Galveston Island exterior at dusk"><span class="mq-tag">Courtyard</span></button>
+        <button class="mq-item" data-lb data-cap="Courtyard — Guest Balcony"><img src="assets/img/g-cy-2.jpg" alt="Courtyard guest balcony overlooking the grounds"><span class="mq-tag">Courtyard</span></button>
+        <button class="mq-item" data-lb data-cap="Courtyard — King Guest Room"><img src="assets/img/g-cy-3.jpg" alt="Courtyard king guest room"><span class="mq-tag">Courtyard</span></button>
+        <button class="mq-item" data-lb data-cap="Courtyard — Front Desk"><img src="assets/img/g-cy-4.jpg" alt="Courtyard front desk"><span class="mq-tag">Courtyard</span></button>
+        <button class="mq-item" data-lb data-cap="Courtyard — The Bistro"><img src="assets/img/g-cy-5.jpg" alt="Salad served at The Bistro"><span class="mq-tag">Courtyard</span></button>
+        <button class="mq-item" data-lb data-cap="Courtyard — Market"><img src="assets/img/g-cy-6.jpg" alt="Courtyard market"><span class="mq-tag">Courtyard</span></button>
+      </div>
+    </div>
+    <div class="mq-row" data-dir="right">
+      <div class="mq-track">
+        <button class="mq-item" data-lb data-cap="TownePlace Suites — Lobby Lounge"><img src="assets/img/g-tps-1.jpg" alt="TownePlace Suites lobby lounge"><span class="mq-tag">TownePlace Suites</span></button>
+        <button class="mq-item" data-lb data-cap="TownePlace Suites — Outdoor Grill"><img src="assets/img/g-tps-2.jpg" alt="TownePlace Suites outdoor grill area"><span class="mq-tag">TownePlace Suites</span></button>
+        <button class="mq-item" data-lb data-cap="TownePlace Suites — Breakfast Area"><img src="assets/img/g-tps-3.jpg" alt="TownePlace Suites breakfast area"><span class="mq-tag">TownePlace Suites</span></button>
+        <button class="mq-item" data-lb data-cap="TownePlace Suites — Queen Suite"><img src="assets/img/g-tps-4.jpg" alt="TownePlace Suites two-queen suite"><span class="mq-tag">TownePlace Suites</span></button>
+        <button class="mq-item" data-lb data-cap="TownePlace Suites — Suite Workspace"><img src="assets/img/g-tps-5.jpg" alt="TownePlace Suites suite workspace"><span class="mq-tag">TownePlace Suites</span></button>
+        <button class="mq-item" data-lb data-cap="TownePlace Suites — Bathroom"><img src="assets/img/g-tps-6.jpg" alt="TownePlace Suites bathroom"><span class="mq-tag">TownePlace Suites</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROPERTY SNAPSHOT ================= -->
+<section class="props sec sec-light" id="properties">
+  <div class="wrap">
+    <div class="props-head"><p class="eyebrow">Property Snapshot</p></div>
+    <div class="prop-grid">
+      <!-- Courtyard -->
+      <article class="prop" aria-label="Courtyard Galveston Island property summary">
+        <div class="prop-photo"><img src="assets/img/cy-exterior.jpg" alt="Courtyard Galveston Island exterior" loading="lazy"></div>
+        <div class="prop-name"><div class="brand">Courtyard</div><div class="loc">Galveston Island</div></div>
+        <table>
+          <tr><th>Address</th><td>9550 Seawall Blvd<br>Galveston, TX 77554</td></tr>
+          <tr><th>Year Opened / Renovated</th><td>2013 / 2024</td></tr>
+          <tr><th>Keys</th><td>85</td></tr>
+          <tr><th>Stories</th><td>4</td></tr>
+          <tr><th>Meeting Space</th><td>1,177 SF</td></tr>
+          <tr><th>F&amp;B</th><td>The Bistro, Castaways Poolside Kitchen and Bar</td></tr>
+          <tr><th>Amenities</th><td>Outdoor Pool, Cabanas, Fitness Center, Business Center, Convenience Store, Guest Laundry, Service Request</td></tr>
+          <tr><th>Interest Conveyed</th><td>Fee Simple</td></tr>
+          <tr><th>Management</th><td>Unencumbered</td></tr>
+          <tr><th>Labor</th><td>Non-Union</td></tr>
+        </table>
+        <div class="prop-thumbs">
+          <button data-lb data-cap="Courtyard — Outdoor Pool"><img src="assets/img/cy-pool.jpg" alt="Courtyard outdoor pool" loading="lazy"><span class="photo-label">Outdoor Pool</span></button>
+          <button data-lb data-cap="Courtyard — Guest Room"><img src="assets/img/cy-room.jpg" alt="Courtyard guest room" loading="lazy"><span class="photo-label">Guest Room</span></button>
+          <button data-lb data-cap="Courtyard — The Bistro"><img src="assets/img/cy-bistro.jpg" alt="The Bistro at Courtyard" loading="lazy"><span class="photo-label">The Bistro</span></button>
+          <button data-lb data-cap="Courtyard — Lobby Lounge"><img src="assets/img/cy-lounge.jpg" alt="Courtyard lobby lounge" loading="lazy"><span class="photo-label">Lobby Lounge</span></button>
+        </div>
+      </article>
+      <!-- TownePlace -->
+      <article class="prop" aria-label="TownePlace Suites Galveston Island property summary">
+        <div class="prop-photo"><img src="assets/img/tps-exterior.jpg" alt="TownePlace Suites Galveston Island exterior" loading="lazy"></div>
+        <div class="prop-name"><div class="brand">TownePlace<small>Suites</small></div><div class="loc">Galveston Island</div></div>
+        <table>
+          <tr><th>Address</th><td>9540 Seawall Blvd<br>Galveston, TX 77554</td></tr>
+          <tr><th>Year Opened / Renovated</th><td>2013 / 2024</td></tr>
+          <tr><th>Keys</th><td>88</td></tr>
+          <tr><th>Stories</th><td>3</td></tr>
+          <tr><th>Meeting Space</th><td>-</td></tr>
+          <tr><th>F&amp;B</th><td>Castaways Poolside Kitchen and Bar, Complimentary Breakfast</td></tr>
+          <tr><th>Amenities</th><td>Outdoor Pool, Cabanas, Fitness Center, Business Center, Convenience Store, Guest Laundry, Full Kitchen, Service Request</td></tr>
+          <tr><th>Interest Conveyed</th><td>Fee Simple</td></tr>
+          <tr><th>Management</th><td>Unencumbered</td></tr>
+          <tr><th>Labor</th><td>Non-Union</td></tr>
+        </table>
+        <div class="prop-thumbs">
+          <button data-lb data-cap="Castaways Poolside Kitchen and Bar"><img src="assets/img/tps-castaways.jpg" alt="Castaways Poolside Kitchen and Bar" loading="lazy"><span class="photo-label">Castaways</span></button>
+          <button data-lb data-cap="TownePlace Suites — Suite with Full Kitchen"><img src="assets/img/tps-kitchen.jpg" alt="TownePlace Suites suite with full kitchen" loading="lazy"><span class="photo-label">Full Kitchen Suite</span></button>
+          <button data-lb data-cap="TownePlace Suites — Lobby"><img src="assets/img/tps-lobby.jpg" alt="TownePlace Suites lobby and front desk" loading="lazy"><span class="photo-label">Lobby</span></button>
+          <button data-lb data-cap="TownePlace Suites — Fitness Center"><img src="assets/img/tps-fitness.jpg" alt="TownePlace Suites fitness center" loading="lazy"><span class="photo-label">Fitness Center</span></button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DIVIDER ================= -->
+<section class="divider" id="highlights" aria-label="Investment Highlights">
+  <div class="pan" style="background-image:url(assets/img/divider-highlights.jpg)"></div>
+  <div class="glass-label">Investment Highlights</div>
+</section>
+
+<!-- ================= EXCEPTIONAL LOCATION ================= -->
+<section class="sec sec-gray" id="location">
+  <div class="wrap">
+    <div class="loc-intro">
+      <div class="panel">
+        <h2 class="h2">Exceptional Location</h2>
+        <p class="lead">The Courtyard and TownePlace Suites Galveston Island benefit from an exceptional waterfront location along the Gulf of America, offering convenient access to Galveston's most popular beaches, attractions, and entertainment destinations. Situated along the island's renowned <strong>Seawall Boulevard</strong>, the Hotels are well-positioned within 10 minutes of major leisure demand generators, including <strong>Moody Gardens</strong>, <strong>Schlitterbahn Waterpark</strong>, <strong>Moody Gardens Convention Center</strong>, and <strong>Galveston Island Convention Center</strong>. The Properties also benefit from proximity to the <strong>Port of Galveston</strong>, <strong>Texas A&amp;M University at Galveston</strong>, and <strong>UTMB Health Jennie Sealy Hospital, Galveston</strong>, offering the Hotels a customer base beyond leisure travelers.</p>
+      </div>
+      <div class="photo-frame pan side-photo" style="background-image:url(assets/img/location-aerial.jpg)" role="img" aria-label="Aerial view of Seawall Boulevard along the Gulf of America"></div>
+    </div>
+
+    <div class="location-cards" id="location-cards">
+      <button class="loc-card" data-index="0" data-gen="6"><img src="assets/img/mg-aerial.jpg" alt="Moody Gardens pyramids from above" loading="lazy"><div class="loc-card-body"><div class="loc-card-title">Moody Gardens</div><div class="loc-card-desc">2.8 Miles</div></div></button>
+      <button class="loc-card" data-index="1" data-gen="4"><img src="assets/img/loc-mgcc.jpg" alt="Moody Gardens Convention Center ballroom" loading="lazy"><div class="loc-card-body"><div class="loc-card-title">Moody Gardens Convention Center</div><div class="loc-card-desc">2.4 Miles</div></div></button>
+      <button class="loc-card" data-index="2" data-gen="7"><img src="assets/img/loc-gicc.jpg" alt="Galveston Island Convention Center" loading="lazy"><div class="loc-card-body"><div class="loc-card-title">Galveston Island Convention Center</div><div class="loc-card-desc">2.8 Miles</div></div></button>
+      <button class="loc-card" data-index="3" data-gen="9"><img src="assets/img/loc-port.jpg" alt="Galveston Island Historic Pleasure Pier from above" loading="lazy"><div class="loc-card-body"><div class="loc-card-title">Galveston Island Historic Pleasure Pier</div><div class="loc-card-desc">5.1 Miles</div></div></button>
+      <button class="loc-card" data-index="4" data-gen="12"><img src="assets/img/loc-tamug.jpg" alt="Texas A&amp;M University at Galveston campus" loading="lazy"><div class="loc-card-body"><div class="loc-card-title">Texas A&amp;M University at Galveston</div><div class="loc-card-desc">6.5 Miles</div></div></button>
+      <button class="loc-card" data-index="5" data-gen="15"><img src="assets/img/loc-utmb.jpg" alt="UTMB Health Jennie Sealy Hospital" loading="lazy"><div class="loc-card-body"><div class="loc-card-title">UTMB Health Jennie Sealy Hospital</div><div class="loc-card-desc">7.3 Miles</div></div></button>
+    </div>
+
+    <div class="logo-grid" id="logo-grid">
+      <button class="logo-tile" data-gen="6" aria-label="Show Moody Gardens on the map"><img src="assets/logos/moody-gardens.svg" alt="Moody Gardens"></button>
+      <button class="logo-tile" data-gen="3" aria-label="Show Schlitterbahn Waterpark on the map"><img src="assets/logos/schlitterbahn.svg" alt="Schlitterbahn Waterpark"></button>
+      <button class="logo-tile" data-gen="4" aria-label="Show Moody Gardens Convention Center on the map"><img src="assets/logos/mgcc.svg" alt="Moody Gardens Convention Center"></button>
+      <button class="logo-tile" data-gen="7" aria-label="Show Galveston Island Convention Center on the map"><img src="assets/logos/gicc.svg" alt="Galveston Island Convention Center"></button>
+      <button class="logo-tile" data-gen="10" aria-label="Show Port of Galveston on the map"><img src="assets/logos/port.svg" alt="Port of Galveston"></button>
+      <button class="logo-tile" data-gen="12" aria-label="Show Texas A&amp;M University at Galveston on the map"><img src="assets/logos/tamug.svg" alt="Texas A&amp;M University at Galveston"></button>
+      <button class="logo-tile" data-gen="15" aria-label="Show UTMB Health on the map"><img src="assets/logos/utmb.svg" alt="UTMB Health"></button>
+    </div>
+    <p class="logo-hint">Select a logo or row to locate it on the map</p>
+
+    <div class="map-shell">
+      <div id="demand-map"><button class="reset-btn" id="reset-map" type="button">Reset Map</button></div>
+      <div class="gen-wrap">
+        <table class="gen-table">
+          <thead><tr><th>#</th><th>Demand Drivers</th><th>Driving Distance (MI)</th></tr></thead>
+          <tbody id="gen-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TOURISM ================= -->
+<section class="sec sec-teal" id="tourism">
+  <div class="wrap">
+    <div class="two-col">
+      <div class="panel panel-teal">
+        <h2 class="h2">A Healthy Tourism Industry</h2>
+        <p class="lead">Galveston Island represents one of the premier tourism destinations along the Texas Gulf Coast, supported by a substantial visitor economy, renowned coastal attractions, and a growing cruise industry. Galveston welcomed approximately <strong>9.1 million visitors</strong> who generated <strong>$1.3 billion in direct visitor spending</strong> and <strong>$1.7 billion in total economic impact</strong>. Tourism serves as a critical economic engine for the island, supporting approximately 12,700 jobs, representing nearly one-third of all employment, and generating $408 million in personal income. Lodging represents the largest category of visitor spending, accounting for approximately <strong>$392 million, or 30% of total visitor expenditures</strong>. The market also benefits from a diversified tourism base spanning leisure travelers, overnight visitors, and cruise passengers, with 3.6 million passenger movements in 2025. Additionally, visitor spending generates approximately $123 million in state and local tax revenue, underscoring the importance of tourism to Galveston's economic vitality. With its established reputation as a premier beach destination, significant cruise activity, and continued investment in tourism-related attractions and infrastructure, Galveston offers a compelling lodging market supported by substantial and diversified visitor demand.</p>
+      </div>
+      <div class="photo-stack">
+        <div class="photo-frame pan side-photo" style="background-image:url(assets/img/tourism-beach.jpg);background-position:50% 40%" role="img" aria-label="Galveston beachfront and Seawall from above"></div>
+        <div class="photo-frame pan side-photo" style="background-image:url(assets/img/tourism-2.jpg);background-position:50% 60%" role="img" aria-label="Galveston Island Historic Pleasure Pier and the Gulf shoreline"></div>
+      </div>
+    </div>
+    <div class="stats four hstats">
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20c.6-3.6 3.1-5.6 6.2-5.6s5.6 2 6.2 5.6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.3c2.7.1 4.6 1.9 5.2 4.7"/></svg><div class="v">9.1 Million</div><div class="l">annual visitors</div></div>
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 20h18M5 17V11M10 17V7M15 17v-4M20 17V4"/></svg><div class="v">$1.7 Billion</div><div class="l">total economic impact</div></div>
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="6" width="18" height="12" rx="1.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6 9v.01M18 15v.01"/></svg><div class="v">$1.3 Billion</div><div class="l">direct visitor spending</div></div>
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 18V8M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="11" r="1.8"/></svg><div class="v">$392 Million</div><div class="l">lodging spending (30% of visitor spending)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MOODY GARDENS ================= -->
+<section class="sec sec-warm on-dark" id="moody-gardens">
+  <div class="wrap">
+    <div style="max-width:980px;margin:0 auto">
+      <h2 class="h2">Moody Gardens</h2>
+      <p class="lead">Less than 10 minutes from the Hotels, Moody Gardens represents one of Galveston Island's premier tourism and entertainment destinations, serving as a major year-round demand generator for the island's hospitality industry. Situated on over 240 acres, the expansive complex features three iconic glass pyramids housing a <strong>1.5-million-gallon aquarium</strong>, tropical rainforest with over 1,700 exotic plants and animals, and interactive science exhibits, in addition to a 3D theater, seasonal waterpark featuring a 650-foot lazy river and two 18-foot-tall tower slides, ropes course, zipline, and golf course. The attraction also features the Moody Gardens Spa and Convention Center, which offers approximately <strong>100,000 square feet of meeting and event space</strong>, positioning the destination as a significant draw for leisure travelers, corporate groups, conventions, and special events. Originally developed to extend Galveston's tourism season beyond the traditional summer months, Moody Gardens generates annual attraction revenues more than <strong>$36 million</strong>, with additional indirect spending benefiting businesses throughout the island. Its diverse attractions, educational programming, seasonal events, and extensive event facilities generate consistent visitation throughout the year, making Moody Gardens one of Galveston's most significant tourism demand generators and an important contributor to the island's lodging market.</p>
+    </div>
+    <div class="stats five hstats">
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 20 8 8l4 6 3-4 7 10z"/></svg><div class="v">240-Acre</div><div class="l">entertainment destination</div></div>
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12c3-4 7-5 11-3 2 1 3 2 4 3-1 1-2 2-4 3-4 2-8 1-11-3zM18 12l3-3v6z"/><circle cx="7.5" cy="11" r=".6" fill="currentColor"/></svg><div class="v">1.5-Million-Gallon</div><div class="l">aquarium</div></div>
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21V11M12 11C12 6 8 4 4 4c0 4 3 7 8 7zM12 14c0-4 3-6 8-6 0 4-3 6-8 6z"/></svg><div class="v">Over 1,700</div><div class="l">exotic plants and animals</div></div>
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 17c2 0 2-1.5 4-1.5S8 17 10 17s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5M2 21c2 0 2-1.5 4-1.5S8 21 10 21s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5M6 13V4h3M6 7c5 0 8 2 10 6"/></svg><div class="v">650-Foot Lazy River</div><div class="l">and two 18-foot-tall tower slides</div></div>
+      <div class="hstat"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 9h18M8 4v16"/></svg><div class="v">100,000 Square Feet</div><div class="l">of meeting and event space</div></div>
+    </div>
+    <div class="mosaic" id="mg-mosaic">
+      <div class="m big pan" data-lb data-cap="Moody Gardens — Aquarium Pyramid" style="background-image:url(assets/img/mg-aquarium.jpg)"><span class="photo-label">Aquarium Pyramid</span></div>
+      <div class="m pan" data-lb data-cap="Moody Gardens — Rainforest Pyramid" style="background-image:url(assets/img/mg-rainforest.jpg)"><span class="photo-label">Rainforest Pyramid</span></div>
+      <div class="m pan" data-lb data-cap="Moody Gardens — Palm Beach Waterpark" style="background-image:url(assets/img/loc-waterpark.jpg)"><span class="photo-label">Waterpark</span></div>
+      <div class="m pan" data-lb data-cap="Moody Gardens — Zipline &amp; Ropes Course" style="background-image:url(assets/img/mg-zipline.jpg)"><span class="photo-label">Zipline &amp; Ropes Course</span></div>
+      <div class="m pan" data-lb data-cap="Moody Gardens — 3D Theater" style="background-image:url(assets/img/mg-theater.jpg)"><span class="photo-label">3D Theater</span></div>
+      <div class="m wide pan" data-lb data-cap="Moody Gardens Golf Course" style="background-image:url(assets/img/mg-golf.jpg)"><span class="photo-label">Golf Course</span></div>    </div>
+  </div>
+</section>
+
+<!-- ================= PORT OF GALVESTON ================= -->
+<section class="sec sec-light" id="port">
+  <div class="wrap">
+    <div class="port-copy">
+        <h2 class="h2">Port of Galveston</h2>
+        <p class="lead">The Port of Galveston represents one of the most significant economic engines on the Texas Gulf Coast and has established itself as a premier cruise destination in North America. As the <strong>only cruise homeport in Texas</strong> and the <strong>fourth-busiest cruise port in the United States</strong>, the Port recorded approximately 3.6 million passenger movements across 416 sailings in 2025, generating an estimated $880 million in cruise-related economic impact. Cruise operations support over 4,500 jobs, generate roughly $300 million in personal income, and contribute more than $730 million in local business revenue. The Port continues to expand its prominence as a major U.S. cruise gateway, having opened its fourth cruise terminal in 2025 with a <strong>$156 million investment</strong> to accommodate the growing presence of MSC Cruises and Norwegian Cruise Line, joining Carnival, Disney, Princess, and Royal Caribbean. The facility now encompasses four cruise terminals totaling approximately 715,000 square feet, more than 8,800 port-operated parking spaces, and over 400 annual cruise sailings. Beyond its cruise operations, the Port serves as a significant commercial and cargo hub, handling approximately 2.9 million tons of cargo in 2025 and creating a total economic impact of $6.5 billion. With continued investment in cruise infrastructure, expanding passenger volumes, and an increasingly diversified lineup of cruise operators, the Port of Galveston serves as a substantial and growing lodging demand generator, supporting overnight stays from pre- and post-cruise passengers, cruise-related personnel, and associated business travelers.</p>
+    </div>
+    <div class="port-media">
+      <div class="port-panel side-photo"><img src="assets/logos/port-white.svg" alt="Port of Galveston — Galveston Wharves"></div>
+      <div class="photo-frame pan side-photo port-photo" style="background-image:url(assets/img/port-photo.jpg)" role="img" aria-label="Royal Caribbean's Allure of the Seas docked at the Port of Galveston cruise terminal"></div>
+    </div>
+    <div class="figures">
+      <div class="figure"><div class="v">$880 Million</div><div class="l">cruise-related economic impact</div></div>
+      <div class="figure"><div class="v">$156 Million</div><div class="l">port expansion</div></div>
+      <div class="figure"><div class="v">Over 400</div><div class="l">annual cruise sailings</div></div>
+      <div class="figure"><div class="v">2.9 Million Tons</div><div class="l">of cargo in 2025</div></div>
+      <div class="figure"><div class="v">$6.5 Billion</div><div class="l">total economic value</div></div>
+    </div>
+    <div class="cruise-grid logo-grid-cruise">
+      <div class="logo-tile"><img src="assets/logos/carnival.svg" alt="Carnival Cruise Line"></div>
+      <div class="logo-tile"><img src="assets/logos/disney.svg" alt="Disney Cruise Line"></div>
+      <div class="logo-tile"><img src="assets/logos/princess.svg" alt="Princess Cruises"></div>
+      <div class="logo-tile"><img src="assets/logos/royal-caribbean.svg" alt="Royal Caribbean"></div>
+      <div class="logo-tile"><img src="assets/logos/msc.svg" alt="MSC Cruises"></div>
+      <div class="logo-tile"><img src="assets/logos/ncl.svg" alt="Norwegian Cruise Line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLEAN INVESTMENT ================= -->
+<section class="sec sec-teal clean" id="clean">
+  <div class="wrap">
+    <div class="two-col">
+      <div class="panel panel-teal" style="display:flex;flex-direction:column;justify-content:center">
+        <h2 class="h2">Clean Investment Opportunity</h2>
+        <p class="lead">The <strong>non-union, fee-simple</strong> interest in the Courtyard and TownePlace Suites is being offered <strong>free and clear of existing management and financing</strong>, affording new ownership maximum flexibility in the future operation and capitalization of the Hotels.</p>
+      </div>
+      <div class="photo-frame pan side-photo" style="background-image:url(assets/img/band-dual.jpg)" role="img" aria-label="Courtyard and TownePlace Suites Galveston Island exteriors"></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-close sec-light" id="cta">
+  <div class="wrap">
+    <div class="cta-buttons">
+      <a class="btn" href="#" target="_blank" rel="noopener">Sign Confidentiality Agreement</a>
+      <a class="btn" href="#" target="_blank" rel="noopener">Download Confidentiality Agreement</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid footer-grid">
+      <div><img class="foot-logo" src="assets/logos/hwe-white.svg" alt="Hodges Ward Elliott" loading="lazy"></div>
+      <div>
+        <h2 class="foot-head">Exclusive Representatives</h2>
+        <div class="foot-reps">
+          <p class="rep"><strong>Austin Brooks</strong>Managing Director<br><a href="mailto:abrooks@hodgeswardelliott.com">abrooks@hodgeswardelliott.com</a></p>
+          <p class="rep"><strong>Michael Brandes</strong>Vice President<br><a href="mailto:mbrandes@hodgeswardelliott.com">mbrandes@hodgeswardelliott.com</a></p>
+          <p class="rep"><strong>Dawson Ovard</strong>Analyst<br><a href="mailto:dovard@hodgeswardelliott.com">dovard@hodgeswardelliott.com</a></p>
+          <p class="rep"><strong>Harrison Fisher</strong>Analyst<br><a href="mailto:hfisher@hodgeswardelliott.com">hfisher@hodgeswardelliott.com</a></p>
+        </div>
+        <h2 class="foot-head">Acquisition Financing Advisor</h2>
+        <div class="foot-reps">
+          <p class="rep"><strong>Michael Britvan</strong>Managing Director<br><a href="mailto:mbritvan@hodgeswardelliott.com">mbritvan@hodgeswardelliott.com</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="legal">&copy; Hodges Ward Elliott. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Overlays -->
+<div class="loc-popout-backdrop" id="loc-popout-backdrop"></div>
+<div class="loc-popout-stage" id="loc-popout-stage" role="dialog" aria-modal="true" aria-label="Location detail"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer"><button class="lb-close" aria-label="Close">&times;</button><img alt=""><div class="lb-cap"></div></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.22/leaflet-maplibre-gl.js"></script>
+<script>
+// Demand drivers — "Microsite Working File CY & TPS Galveston Island.xlsx" (Demand Generators sheet)
+var HOTEL = { name: "Courtyard &amp; TownePlace Suites Galveston Island", lat: 29.24830, lng: -94.86042 };
+var GENERATORS = [
+  { name: "Galveston Fishing Pier",                         dist: "0.6", lat: 29.2497, lng: -94.8525 },
+  { name: "Sunny Beach",                                    dist: "1.8", lat: 29.2279, lng: -94.8936 },
+  { name: "Scholes International Airport",                  dist: "2.0", lat: 29.2641, lng: -94.8585 },
+  { name: "Schlitterbahn Waterpark Galveston",              dist: "2.2", lat: 29.2659, lng: -94.8511 },
+  { name: "Moody Convention Center",                        dist: "2.4", lat: 29.2736, lng: -94.8492 },
+  { name: "Moody Gardens Golf Course",                      dist: "2.6", lat: 29.2626, lng: -94.8689 },
+  { name: "Moody Gardens Attractions Theme Park",           dist: "2.8", lat: 29.2746, lng: -94.8524 },
+  { name: "Galveston Island Convention Center",             dist: "2.8", lat: 29.2697, lng: -94.8223 },
+  { name: "Galvez Shopping Center",                         dist: "4.3", lat: 29.2882, lng: -94.8415 },
+  { name: "Galveston Island Historic Pleasure Pier",        dist: "5.1", lat: 29.2866, lng: -94.7899 },
+  { name: "Port of Galveston",                              dist: "6.2", lat: 29.3071, lng: -94.8042 },
+  { name: "Strand Historic District",                       dist: "6.5", lat: 29.3087, lng: -94.7884 },
+  { name: "Texas A&amp;M University at Galveston",          dist: "6.5", lat: 29.3167, lng: -94.8187 },
+  { name: "Port of Galveston - Cruise Terminal",            dist: "6.6", lat: 29.3085, lng: -94.7966 },
+  { name: "Galveston Island State Park Nature Center",      dist: "7.0", lat: 29.2019, lng: -94.9676 },
+  { name: "UTMB Health Jennie Sealy Hospital, Galveston",   dist: "7.3", lat: 29.3108, lng: -94.7772 },
+  { name: "Texas International Terminals",                  dist: "7.4", lat: 29.3118, lng: -94.8285 },
+  { name: "Galveston Naval Museum",                         dist: "9.4", lat: 29.3342, lng: -94.7792 }
+];
+
+document.addEventListener("DOMContentLoaded", function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Sign CA side tab: slides away while scrolling, back in after 2s idle.
+  var tab = document.querySelector(".side-cta"), idle;
+  window.addEventListener("scroll", function () {
+    tab.classList.add("away");
+    clearTimeout(idle);
+    idle = setTimeout(function () { tab.classList.remove("away"); }, 2000);
+  }, { passive: true });
+
+  // Hero parallax.
+  var heroSection = document.getElementById("hero"), heroImg = document.getElementById("hero-img"), ticking = false;
+  function updateParallax() {
+    var rect = heroSection.getBoundingClientRect();
+    if (rect.bottom > 0) heroImg.style.transform = "translateY(" + (Math.max(0, -rect.top) * 0.35) + "px)";
+    ticking = false;
+  }
+  if (!reduce) {
+    window.addEventListener("scroll", function () { if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; } }, { passive: true });
+    updateParallax();
+  }
+
+  // Panels: eased zoom + pan opposite the cursor on hover.
+  (function () {
+    var EASE = "cubic-bezier(.16,1,.3,1)", ZOOM = 1.14;
+    document.querySelectorAll(".pan").forEach(function (el) {
+      var m = /url\(["']?(.*?)["']?\)/.exec(el.style.backgroundImage || "");
+      if (!m) return;
+      var ratio = 0, probe = new Image();
+      probe.onload = function () { ratio = probe.naturalWidth / probe.naturalHeight; };
+      probe.src = m[1];
+      el.style.transition = (el.style.transition ? el.style.transition + "," : "") + "background-size .6s " + EASE + ", background-position .45s " + EASE;
+      function coverPct() {
+        var r = el.getBoundingClientRect();
+        if (!ratio || !r.width) return 100;
+        return 100 * Math.max(1, ratio / (r.width / r.height));
+      }
+      el.addEventListener("mouseenter", function () {
+        var base = coverPct(); el._base = base;
+        el.style.backgroundSize = base + "%";
+        requestAnimationFrame(function () { el.style.backgroundSize = (base * ZOOM) + "%"; });
+      });
+      el.addEventListener("mousemove", function (e) {
+        var r = el.getBoundingClientRect();
+        var dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+        el.style.backgroundPosition = (50 - dx * 16) + "% " + (50 - dy * 16) + "%";
+      });
+      el.addEventListener("mouseleave", function () {
+        el.style.backgroundSize = (el._base || coverPct()) + "%";
+        el.style.backgroundPosition = "50% 50%";
+        setTimeout(function () { if (!el.matches(":hover")) { el.style.backgroundSize = ""; el.style.backgroundPosition = ""; } }, 640);
+      });
+    });
+  })();
+
+  // Infinite gallery: clone each track once at runtime for a seamless loop (each photo exists once in the markup).
+  if (!reduce) document.querySelectorAll(".mq-track").forEach(function (track) {
+    Array.prototype.slice.call(track.children).forEach(function (item) {
+      var c = item.cloneNode(true);
+      c.setAttribute("aria-hidden", "true"); c.tabIndex = -1;
+      track.appendChild(c);
+    });
+  });
+
+  // Lightbox.
+  var lb = document.getElementById("lb"), lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".lb-cap");
+  document.querySelectorAll("[data-lb]").forEach(function (el) {
+    el.addEventListener("click", function () {
+      var im = el.querySelector("img"), bg = /url\(["']?(.*?)["']?\)/.exec(el.style.backgroundImage || "");
+      lbImg.src = im ? im.src : (bg ? bg[1] : ""); lbImg.alt = el.dataset.cap || ""; lbCap.textContent = el.dataset.cap || "";
+      lb.classList.add("show");
+    });
+  });
+  lb.addEventListener("click", function () { lb.classList.remove("show"); });
+
+  // Demand map table.
+  var tbody = document.getElementById("gen-tbody");
+  GENERATORS.forEach(function (g, i) {
+    var tr = document.createElement("tr");
+    tr.dataset.index = i;
+    tr.innerHTML = '<td><span class="pin-badge">' + (i + 1) + '</span></td><td>' + g.name + '</td><td>' + g.dist + '</td>';
+    tbody.appendChild(tr);
+  });
+  var rows = tbody.querySelectorAll("tr");
+  var el = document.getElementById("demand-map");
+  var selectRow = function () {};
+  if (typeof L === "undefined") {
+    el.insertAdjacentHTML("afterbegin", '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#4c5a63;font-size:13px;padding:24px;text-align:center">Map unavailable in this preview &mdash; open the page in a browser to view the interactive map.</div>');
+  } else {
+    var map = L.map(el, { scrollWheelZoom: false }).setView([HOTEL.lat + 0.03, HOTEL.lng + 0.035], 12);
+    // OpenFreeMap — Positron style (vector tiles via MapLibre GL); CARTO raster fallback.
+    if (L.maplibreGL && window.maplibregl) {
+      L.maplibreGL({
+        style: "https://tiles.openfreemap.org/styles/positron",
+        attribution: '&copy; <a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+      }).addTo(map);
+    } else {
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", { maxZoom: 19, attribution: "&copy; OpenStreetMap &copy; CARTO" }).addTo(map);
+    }
+    setTimeout(function () { map.invalidateSize(); }, 200);
+    var homeBounds = L.latLngBounds([[HOTEL.lat, HOTEL.lng]].concat(GENERATORS.map(function (g) { return [g.lat, g.lng]; })));
+    map.fitBounds(homeBounds, { padding: [30, 30] });
+    var hotelIcon = L.divIcon({ className: "", html: '<div class="hotel-pin">CY|TPS</div>', iconSize: [46, 46], iconAnchor: [23, 23] });
+    L.marker([HOTEL.lat, HOTEL.lng], { icon: hotelIcon, zIndexOffset: 1000 }).addTo(map).bindPopup(HOTEL.name);
+    var markers = GENERATORS.map(function (g, i) {
+      var icon = L.divIcon({ className: "", html: '<div class="num-pin">' + (i + 1) + '</div>', iconSize: [26, 26], iconAnchor: [13, 13] });
+      var m = L.marker([g.lat, g.lng], { icon: icon }).addTo(map).bindPopup(g.name + " &middot; " + g.dist + " mi");
+      m.on("click", function () { selectRow(i); });
+      return m;
+    });
+    selectRow = function (i) {
+      rows.forEach(function (r) { r.classList.remove("active"); });
+      var row = tbody.querySelector('tr[data-index="' + i + '"]');
+      if (row) {
+        row.classList.add("active");
+        var wrap = row.closest(".gen-wrap");
+        wrap.scrollTo({ top: row.offsetTop - wrap.clientHeight / 2 + row.offsetHeight / 2, behavior: "smooth" });
+      }
+      map.flyTo([GENERATORS[i].lat, GENERATORS[i].lng], 15);
+      markers[i].openPopup();
+    };
+    rows.forEach(function (row) { row.addEventListener("click", function () { selectRow(parseInt(row.dataset.index, 10)); }); });
+    document.getElementById("reset-map").addEventListener("click", function () {
+      rows.forEach(function (r) { r.classList.remove("active"); });
+      map.closePopup();
+      map.flyToBounds(homeBounds, { padding: [30, 30] });
+    });
+  }
+  // Logo tiles jump to their map pin.
+  document.querySelectorAll(".logo-tile[data-gen]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var target = document.getElementById("demand-map");
+      var r = target.getBoundingClientRect();
+      var visible = r.top >= 0 && r.bottom <= window.innerHeight;
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(function () { selectRow(parseInt(btn.dataset.gen, 10)); }, visible ? 0 : 700);
+    });
+  });
+
+  // Location cards: pop-out from card position.
+  var locCards = document.querySelectorAll("#location-cards .loc-card");
+  var stage = document.getElementById("loc-popout-stage"), backdrop = document.getElementById("loc-popout-backdrop"), openIndex = null;
+  function selectLocation(i) { locCards.forEach(function (c) { c.classList.toggle("active", c.dataset.index == i); }); }
+  function openPopout(i) {
+    var card = locCards[i];
+    if (!card || openIndex === i) return;
+    var rect = card.getBoundingClientRect();
+    stage.style.transition = "none";
+    stage.innerHTML = card.innerHTML;
+    stage.style.top = rect.top + "px"; stage.style.left = rect.left + "px";
+    stage.style.width = rect.width + "px"; stage.style.height = rect.height + "px";
+    stage.classList.add("show");
+    void stage.offsetHeight;
+    stage.style.transition = "";
+    var tw = Math.min(window.innerWidth * 0.9, 820), th = Math.min(window.innerHeight * 0.72, 560);
+    stage.style.top = ((window.innerHeight - th) / 2) + "px"; stage.style.left = ((window.innerWidth - tw) / 2) + "px";
+    stage.style.width = tw + "px"; stage.style.height = th + "px";
+    backdrop.classList.add("show");
+    openIndex = i;
+  }
+  function closePopout() {
+    if (openIndex === null) return;
+    var card = locCards[openIndex];
+    if (card) {
+      var rect = card.getBoundingClientRect();
+      stage.style.top = rect.top + "px"; stage.style.left = rect.left + "px";
+      stage.style.width = rect.width + "px"; stage.style.height = rect.height + "px";
+    }
+    backdrop.classList.remove("show"); stage.classList.remove("show");
+    selectLocation(-1);
+    openIndex = null;
+    setTimeout(function () { if (openIndex === null) stage.innerHTML = ""; }, 520);
+  }
+  locCards.forEach(function (card, i) {
+    card.addEventListener("mouseenter", function () { if (openIndex === null) selectLocation(i); });
+    card.addEventListener("mouseleave", function () { if (openIndex === null) selectLocation(-1); });
+    card.addEventListener("click", function () { selectLocation(i); if (openIndex === i) closePopout(); else openPopout(i); });
+  });
+  backdrop.addEventListener("click", closePopout);
+  stage.addEventListener("click", closePopout);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closePopout(); lb.classList.remove("show"); } });
+
+  // Scroll-reveal: scale + fade content in as it enters the viewport.
+  (function () {
+    var SEL = ".h2, .eyebrow, .lead, .cta-buttons, #overview-photo, .prop, .glass-label, .panel, .side-photo, .loc-card, .logo-tile, .logo-hint, .map-shell, .hstat, .mosaic .m, .figure, .cruise-head, .footer-grid";
+    var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) { return !el.closest("#hero"); });
+    if (!els.length || reduce || !("IntersectionObserver" in window)) return;
+    var STAGGER = { "prop-grid": 1, "location-cards": 1, "logo-grid": 1, "hstats": 1, "mosaic": 1, "figures": 1, "cruise-grid": 1 };
+    els.forEach(function (el) {
+      el.classList.add("reveal");
+      var p = el.parentElement;
+      if (p && p.className.split(" ").some(function (c) { return STAGGER[c]; })) {
+        el.style.transitionDelay = (Array.prototype.indexOf.call(p.children, el) * 70) + "ms";
+      }
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add("in"); io.unobserve(en.target);
+          setTimeout(function () { en.target.style.transitionDelay = ""; }, 1200);
+        }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+});
+</script>
+</body>
+</html>
