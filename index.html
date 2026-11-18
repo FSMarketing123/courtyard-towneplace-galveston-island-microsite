@@ -7,7 +7,7 @@
 <meta name="description" content="Hodges Ward Elliott presents the opportunity to acquire the 85-key Courtyard and 88-key TownePlace Suites Galveston Island.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@400;600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <style>
@@ -262,8 +262,30 @@ table.gen-table{width:100%;border-collapse:collapse;font-size:13px}
 .clean .photo-frame{min-height:380px}
 
 /* ---------- CTA close / Footer ---------- */
-.cta-close{padding:70px 0 80px;text-align:center}
-.cta-close .cta-buttons{margin-top:0}
+/* CTA band — from HWE cta-section-template, recolored for this microsite */
+.cta-section{
+  --cta-bg:var(--navy);
+  --cta-pad:clamp(100px,12vw,180px);
+  --cta-h2-size:clamp(40px,5.5vw,72px);
+  --cta-h2-color:#fff;
+  --cta-em-opacity:.75;
+  --cta-body-color:#c3d2da;
+  --cta-body-size:15.5px;
+  --cta-body-measure:50ch;
+  --cta-btn-gap:24px;
+  background:var(--cta-bg);padding:var(--cta-pad) 0;text-align:center}
+.cta-section .section-h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;font-size:var(--cta-h2-size);line-height:1.15;color:var(--cta-h2-color);margin:0 0 24px}
+.cta-section .section-h2 em{font-style:italic;color:var(--cta-h2-color);opacity:var(--cta-em-opacity)}
+.cta-body{font-family:"Jost",system-ui,sans-serif;font-size:var(--cta-body-size);color:var(--cta-body-color);max-width:var(--cta-body-measure);margin:0 auto 40px;line-height:1.8}
+.cta-btns{display:flex;gap:var(--cta-btn-gap);justify-content:center;flex-wrap:wrap}
+/* site buttons on the navy band: teal primary, white secondary */
+.cta-section .btn{box-shadow:0 12px 30px rgba(0,0,0,.28)}
+.cta-section .btn-primary{background:var(--teal);color:#fff}
+.cta-section .btn-primary:hover{background:var(--teal-lt);color:#fff}
+.cta-section .btn-secondary{background:#fff;color:var(--navy)}
+.cta-section .btn-secondary:hover{background:var(--teal);color:#fff}
+.cta-section .btn:focus-visible{outline:2px solid var(--teal-lt);outline-offset:3px}
+@media (max-width:560px){.cta-btns{flex-direction:column;align-items:stretch}}
 footer{background:var(--foot);color:#fff;padding:clamp(56px,6vw,80px) 0}
 .foot-grid{display:grid;grid-template-columns:260px 1fr;gap:50px;align-items:center}
 .foot-logo{width:150px}
@@ -553,11 +575,14 @@ footer{background:var(--foot);color:#fff;padding:clamp(56px,6vw,80px) 0}
   </div>
 </section>
 
-<section class="cta-close sec-light" id="cta">
+<section class="cta-section" id="cta">
   <div class="wrap">
-    <div class="cta-buttons">
-      <a class="btn" href="#" target="_blank" rel="noopener">Sign Confidentiality Agreement</a>
-      <a class="btn" href="#" target="_blank" rel="noopener">Download Confidentiality Agreement</a>
+    <h2 class="section-h2">Access the<br><em>Offering Memorandum</em></h2>
+    <p class="cta-body">To receive the full Offering Memorandum and access data room materials, please execute the Confidentiality Agreement below.</p>
+    <div class="cta-btns">
+      <!-- PLACEHOLDER links: e-signature URL and the CA file -->
+      <a class="btn btn-primary" href="#" target="_blank" rel="noopener noreferrer">Sign Confidentiality Agreement</a>
+      <a class="btn btn-secondary" href="#" target="_blank" rel="noopener noreferrer">Download Confidentiality Agreement</a>
     </div>
   </div>
 </section>
@@ -821,7 +846,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Scroll-reveal: scale + fade content in as it enters the viewport.
   (function () {
-    var SEL = ".h2, .eyebrow, .lead, .cta-buttons, #overview-photo, .prop, .glass-label, .panel, .side-photo, .loc-card, .logo-tile, .logo-hint, .map-shell, .hstat, .mosaic .m, .figure, .cruise-head, .footer-grid";
+    var SEL = ".h2, .eyebrow, .lead, .cta-buttons, .cta-section .section-h2, .cta-body, .cta-btns, #overview-photo, .prop, .glass-label, .panel, .side-photo, .loc-card, .logo-tile, .logo-hint, .map-shell, .hstat, .mosaic .m, .figure, .cruise-head, .footer-grid";
     var els = Array.prototype.slice.call(document.querySelectorAll(SEL)).filter(function (el) { return !el.closest("#hero"); });
     if (!els.length || reduce || !("IntersectionObserver" in window)) return;
     var STAGGER = { "prop-grid": 1, "location-cards": 1, "logo-grid": 1, "hstats": 1, "mosaic": 1, "figures": 1, "cruise-grid": 1 };
