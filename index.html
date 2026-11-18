@@ -683,6 +683,25 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // Property snapshots: keep both tables aligned row-for-row when the cards sit side by side.
+  function alignProps() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".prop"));
+    if (cards.length < 2) return;
+    var parts = cards.map(function (c) { return [c.querySelector(".prop-name")].concat(Array.prototype.slice.call(c.querySelectorAll("tr"))); });
+    parts.forEach(function (list) { list.forEach(function (el) { el.style.height = ""; }); });
+    var sideBySide = Math.abs(cards[0].offsetTop - cards[1].offsetTop) < 2 && cards[0].offsetLeft !== cards[1].offsetLeft;
+    if (!sideBySide) return;
+    for (var i = 0; i < parts[0].length; i++) {
+      var max = 0;
+      parts.forEach(function (list) { if (list[i]) max = Math.max(max, list[i].offsetHeight); });
+      parts.forEach(function (list) { if (list[i]) list[i].style.height = max + "px"; });
+    }
+  }
+  alignProps();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(alignProps);
+  window.addEventListener("load", alignProps);
+  var alignT; window.addEventListener("resize", function () { clearTimeout(alignT); alignT = setTimeout(alignProps, 120); });
+
   // Lightbox.
   var lb = document.getElementById("lb"), lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".lb-cap");
   document.querySelectorAll("[data-lb]").forEach(function (el) {
