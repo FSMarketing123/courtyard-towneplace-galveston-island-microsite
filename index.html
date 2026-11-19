@@ -113,8 +113,8 @@ section{position:relative}
 .pan-px{position:absolute;left:0;right:0;top:-14%;bottom:-14%;z-index:0;will-change:transform;pointer-events:none}
 .pan-img{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat}
 .photo-frame[data-lb]{cursor:zoom-in}
-.photo-frame .pan-img{transition:transform .7s var(--ease),filter .7s var(--ease)}
-.photo-frame[data-lb]:hover .pan-img{transform:scale(1.06);filter:saturate(1.08)}
+.photo-frame .pan-img,.mosaic .m .pan-img{transition:transform .7s var(--ease),filter .7s var(--ease)}
+.photo-frame[data-lb]:hover .pan-img,.mosaic .m:hover .pan-img{transform:scale(1.06);filter:saturate(1.08)}
 .photo-frame[data-lb]:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
 
 /* ---------- Property snapshot ---------- */
