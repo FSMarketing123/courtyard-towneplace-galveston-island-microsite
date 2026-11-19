@@ -112,6 +112,10 @@ section{position:relative}
 .pan.has-px{background-image:none!important;overflow:hidden}
 .pan-px{position:absolute;left:0;right:0;top:-14%;bottom:-14%;z-index:0;will-change:transform;pointer-events:none}
 .pan-img{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat}
+.photo-frame[data-lb]{cursor:zoom-in}
+.photo-frame .pan-img{transition:transform .7s var(--ease),filter .7s var(--ease)}
+.photo-frame[data-lb]:hover .pan-img{transform:scale(1.06);filter:saturate(1.08)}
+.photo-frame[data-lb]:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
 
 /* ---------- Property snapshot ---------- */
 .props{padding-top:0}
@@ -456,7 +460,7 @@ footer{background:var(--foot);color:#fff;padding:clamp(56px,6vw,80px) 0}
         <h2 class="h2">Exceptional Location</h2>
         <p class="lead">The Courtyard and TownePlace Suites Galveston Island benefit from an exceptional waterfront location along the Gulf of America, offering convenient access to Galveston's most popular beaches, attractions, and entertainment destinations. Situated along the island's renowned <strong>Seawall Boulevard</strong>, the Hotels are well-positioned within 10 minutes of major leisure demand generators, including <strong>Moody Gardens</strong>, <strong>Texas Tides</strong>, <strong>Moody Gardens Convention Center</strong>, and <strong>Galveston Island Convention Center</strong>. The Properties also benefit from proximity to the <strong>Port of Galveston</strong>, <strong>Texas A&amp;M University at Galveston</strong>, and <strong>University of Texas Medical Branch</strong>, offering the Hotels a customer base beyond leisure travelers.</p>
       </div>
-      <div class="photo-frame pan side-photo" style="background-image:url(assets/img/location-aerial.jpg)" role="img" aria-label="Aerial view of Seawall Boulevard along the Gulf of America"></div>
+      <div data-lb data-cap="Seawall Boulevard — Aerial View" tabindex="0" class="photo-frame pan side-photo" style="background-image:url(assets/img/location-aerial.jpg)" role="button" aria-label="Aerial view of Seawall Boulevard along the Gulf of America"></div>
     </div>
 
     <div class="location-cards" id="location-cards">
@@ -499,8 +503,8 @@ footer{background:var(--foot);color:#fff;padding:clamp(56px,6vw,80px) 0}
         <p class="lead">Galveston Island represents one of the premier tourism destinations along the Texas Gulf Coast, supported by a substantial visitor economy, renowned coastal attractions, and a growing cruise industry. In 2025, Galveston welcomed approximately <strong>9.1 million visitors</strong> who generated <strong>$1.3 billion in direct visitor spending</strong> and <strong>$1.7 billion in total economic impact</strong>. Tourism serves as a critical economic engine for the island, supporting approximately 12,700 jobs, representing nearly one-third of all employment, and generating $408 million in personal income. Lodging represents the largest category of visitor spending, accounting for approximately <strong>$392 million, or 30% of total visitor expenditures</strong>. The market also benefits from a diversified tourism base spanning leisure travelers, overnight visitors, and cruise passengers, with 3.6 million passenger movements in 2025. Additionally, visitor spending generates approximately $123 million in state and local tax revenue, underscoring the importance of tourism to Galveston's economic vitality. With its established reputation as a premier beach destination, significant cruise activity, and continued investment in tourism-related attractions and infrastructure, Galveston offers a compelling lodging market supported by substantial and diversified visitor demand.</p>
       </div>
       <div class="photo-stack">
-        <div class="photo-frame pan side-photo" style="background-image:url(assets/img/tourism-beach.jpg);background-position:50% 50%" role="img" aria-label="Galveston Island Historic Pleasure Pier from above"></div>
-        <div class="photo-frame pan side-photo" style="background-image:url(assets/img/tourism-2.jpg);background-position:50% 50%" role="img" aria-label="Galveston Island Historic Pleasure Pier lit up at night"></div>
+        <div data-lb data-cap="Galveston Island Historic Pleasure Pier" tabindex="0" class="photo-frame pan side-photo" style="background-image:url(assets/img/tourism-beach.jpg);background-position:50% 50%" role="button" aria-label="Galveston Island Historic Pleasure Pier from above"></div>
+        <div data-lb data-cap="Pleasure Pier at Night" tabindex="0" class="photo-frame pan side-photo" style="background-image:url(assets/img/tourism-2.jpg);background-position:50% 50%" role="button" aria-label="Galveston Island Historic Pleasure Pier lit up at night"></div>
       </div>
     </div>
     <div class="stats four hstats">
@@ -545,7 +549,7 @@ footer{background:var(--foot);color:#fff;padding:clamp(56px,6vw,80px) 0}
     </div>
     <div class="port-media">
       <div class="port-panel side-photo"><img src="assets/logos/port-white.svg" alt="Port of Galveston — Galveston Wharves"></div>
-      <div class="photo-frame pan side-photo port-photo" style="background-image:url(assets/img/port-photo.jpg)" role="img" aria-label="Royal Caribbean's Allure of the Seas docked at the Port of Galveston cruise terminal"></div>
+      <div data-lb data-cap="Port of Galveston — Cruise Terminal" tabindex="0" class="photo-frame pan side-photo port-photo" style="background-image:url(assets/img/port-photo.jpg)" role="button" aria-label="Royal Caribbean's Allure of the Seas docked at the Port of Galveston cruise terminal"></div>
     </div>
     <div class="figures">
       <div class="figure"><div class="v">$880 Million</div><div class="l">cruise-related economic impact</div></div>
@@ -573,7 +577,7 @@ footer{background:var(--foot);color:#fff;padding:clamp(56px,6vw,80px) 0}
         <h2 class="h2">Clean Investment Opportunity</h2>
         <p class="lead">The <strong>non-union, fee-simple</strong> interest in the Courtyard and TownePlace Suites is being offered <strong>free and clear of existing management and financing</strong>, affording new ownership maximum flexibility in the future operation and capitalization of the Hotels.</p>
       </div>
-      <div class="photo-frame pan side-photo" style="background-image:url(assets/img/clean-room.jpg)" role="img" aria-label="TownePlace Suites Galveston Island guest suite"></div>
+      <div data-lb data-cap="TownePlace Suites — Guest Suite" tabindex="0" class="photo-frame pan side-photo" style="background-image:url(assets/img/clean-room.jpg)" role="button" aria-label="TownePlace Suites Galveston Island guest suite"></div>
     </div>
   </div>
 </section>
@@ -747,6 +751,9 @@ document.addEventListener("DOMContentLoaded", function () {
       var im = el.querySelector("img"), bg = /url\(["']?(.*?)["']?\)/.exec(el.style.backgroundImage || "");
       lbImg.src = im ? im.src : (bg ? bg[1] : ""); lbImg.alt = el.dataset.cap || ""; lbCap.textContent = el.dataset.cap || "";
       lb.classList.add("show");
+    });
+    if (el.tagName !== "BUTTON") el.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.click(); }
     });
   });
   lb.addEventListener("click", function () { lb.classList.remove("show"); });
