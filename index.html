@@ -111,6 +111,7 @@ section{position:relative}
 .pan{background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
 .pan.has-px{background-image:none!important;overflow:hidden}
 .pan-px{position:absolute;left:0;right:0;top:-14%;bottom:-14%;z-index:0;will-change:transform;pointer-events:none}
+.divider .pan-px{top:-32%;bottom:-32%} /* room for the stronger divider parallax (data-px=.3) */
 .pan-img{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat}
 .photo-frame[data-lb]{cursor:zoom-in}
 .photo-frame .pan-img,.mosaic .m .pan-img{transition:transform .7s var(--ease),filter .7s var(--ease)}
@@ -448,7 +449,7 @@ footer{background:var(--foot);color:#fff;padding:clamp(56px,6vw,80px) 0}
 
 <!-- ================= DIVIDER ================= -->
 <section class="divider" id="highlights" aria-label="Investment Highlights">
-  <div class="pan" style="background-image:url(assets/img/divider-highlights.jpg)"></div>
+  <div class="pan" data-px="0.3" style="background-image:url(assets/img/divider-highlights.jpg)"></div>
   <div class="glass-label">Investment Highlights</div>
 </section>
 
@@ -693,7 +694,7 @@ document.addEventListener("DOMContentLoaded", function () {
       img.style.backgroundPosition = el.style.backgroundPosition || "50% 50%";
       px.appendChild(img); el.insertBefore(px, el.firstChild);
       el.classList.add("has-px");
-      items.push({ el: el, px: px });
+      items.push({ el: el, px: px, k: parseFloat(el.dataset.px) || PX });
 
     });
     if (reduce || !items.length) return;
@@ -707,7 +708,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // The photo drifts down inside its frame as you scroll, so it moves slower than the page.
         var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
         p = Math.max(-1, Math.min(1, p));
-        it.px.style.transform = "translate3d(0," + (-p * PX * r.height).toFixed(1) + "px,0)";
+        it.px.style.transform = "translate3d(0," + (-p * it.k * r.height).toFixed(1) + "px,0)";
       });
     }
     function req() { if (!tick) { tick = true; requestAnimationFrame(update); } }
