@@ -111,7 +111,7 @@ section{position:relative}
 .pan{background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
 .pan.has-px{background-image:none!important;overflow:hidden}
 .pan-px{position:absolute;left:0;right:0;top:-14%;bottom:-14%;z-index:0;will-change:transform;pointer-events:none}
-.pan-img{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.pan-img{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat}
 
 /* ---------- Property snapshot ---------- */
 .props{padding-top:0}
@@ -668,9 +668,9 @@ document.addEventListener("DOMContentLoaded", function () {
     updateParallax();
   }
 
-  // Panels: scroll parallax + eased zoom/pan opposite the cursor on hover.
+  // Panels: scroll parallax.
   // Each .pan gets two inner layers: .pan-px (taller than the panel, shifted on scroll)
-  // and .pan-img (the photo, zoomed/panned on hover). The panel keeps its inline
+  // and .pan-img (the photo). The panel keeps its inline
   // background-image (hidden via CSS) so the lightbox can still read it.
   (function () {
     var PX = 0.12; // parallax travel as a fraction of panel height, each direction
@@ -691,13 +691,6 @@ document.addEventListener("DOMContentLoaded", function () {
       el.classList.add("has-px");
       items.push({ el: el, px: px });
 
-      el.addEventListener("mouseenter", function () { img.style.transform = "scale(1.14)"; });
-      el.addEventListener("mousemove", function (e) {
-        var r = el.getBoundingClientRect();
-        var dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
-        img.style.transform = "translate(" + (-dx * 8) + "%," + (-dy * 6) + "%) scale(1.14)";
-      });
-      el.addEventListener("mouseleave", function () { img.style.transform = ""; });
     });
     if (reduce || !items.length) return;
     var vh = window.innerHeight, tick = false;
